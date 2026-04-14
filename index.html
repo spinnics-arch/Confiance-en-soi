@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confiance en soi — Autoévaluation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sr: #ff6f61;
+    --sr-l: #fff0ef;
+    --sr-m: #ffb5af;
+    --sb: #506ed9;
+    --sb-l: #eef1fc;
+    --sb-m: #a0b0ee;
+    --sb-d: #2a3a7a;
+    --brown: #372a28;
+    --brown-l: #f7f3f2;
+    --gray: #f2eeec;
+    --gray-2: #e8e2df;
+    --text: #372a28;
+    --text-2: #8a7470;
+    --text-3: #b5aeab;
+    --white: #ffffff;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --radius-pill: 100px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--brown-l);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ─── Layout ─── */
+  .app {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ─── Header ─── */
+  .header {
+    padding: 48px 0 36px;
+    text-align: center;
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--sr);
+    margin-bottom: 10px;
+  }
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 6vw, 40px);
+    font-weight: 400;
+    color: var(--brown);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .header h1 em {
+    font-style: italic;
+    color: var(--sr);
+  }
+  .header-sub {
+    font-size: 14px;
+    color: var(--text-2);
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  /* ─── Navigation tabs ─── */
+  .nav-tabs {
+    display: flex;
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 5px;
+    gap: 4px;
+    margin-bottom: 28px;
+    border: 1px solid var(--gray-2);
+  }
+  .nav-tab {
+    flex: 1;
+    padding: 9px 8px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all .2s;
+    text-align: center;
+  }
+  .nav-tab.active {
+    background: var(--sr);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(255,111,97,.3);
+  }
+  .nav-tab:hover:not(.active) {
+    background: var(--gray);
+    color: var(--text);
+  }
+
+  /* ─── Section ─── */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ─── Progress strip (eval) ─── */
+  .prog-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .prog-track {
+    flex: 1;
+    height: 3px;
+    background: var(--gray-2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .prog-fill {
+    height: 100%;
+    background: var(--sr);
+    border-radius: 2px;
+    transition: width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .prog-text {
+    font-size: 12px;
+    color: var(--text-3);
+    min-width: 44px;
+    text-align: right;
+  }
+
+  /* ─── Domain card ─── */
+  .domain-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-2);
+    padding: 24px;
+    margin-bottom: 16px;
+    transition: border-color .2s;
+    animation: fadeUp .35s ease both;
+  }
+  .domain-card:focus-within { border-color: var(--sr-m); }
+  .domain-card.shake { animation: shake .4s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%     { transform: translateX(-6px); }
+    40%     { transform: translateX(6px); }
+    60%     { transform: translateX(-4px); }
+    80%     { transform: translateX(4px); }
+  }
+
+  .domain-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--gray);
+  }
+  .domain-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 17px;
+  }
+  .domain-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--brown);
+    margin-bottom: 2px;
+  }
+  .domain-sub-label {
+    font-size: 12px;
+    color: var(--text-2);
+  }
+
+  /* ─── Question ─── */
+  .q-block { margin-bottom: 18px; }
+  .q-block:last-child { margin-bottom: 0; }
+  .q-text {
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.55;
+  }
+  .q-num {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-3);
+    margin-right: 5px;
+  }
+  .rating-row {
+    display: flex;
+    gap: 5px;
+  }
+  .r-btn {
+    flex: 1;
+    height: 38px;
+    border: 1px solid var(--gray-2);
+    border-radius: var(--radius-sm);
+    background: var(--gray);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .r-btn:hover { border-color: var(--sr-m); background: var(--sr-l); color: var(--brown); }
+  .r-btn.s1 { background: #e8ecfb; border-color: #a0b0ee; color: var(--sb-d); }
+  .r-btn.s2 { background: #f0f3fd; border-color: #b8c5f2; color: var(--sb-d); }
+  .r-btn.s3 { background: #fff5f4; border-color: var(--sr-m); color: #c04030; }
+  .r-btn.s4 { background: #ffe8e6; border-color: #ff9d96; color: #b03020; }
+  .r-btn.s5 { background: var(--sr); border-color: var(--sr); color: #fff; }
+  .rating-ends {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--text-3);
+    margin-top: 4px;
+    padding: 0 2px;
+  }
+
+  /* ─── Nav buttons ─── */
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .btn-main {
+    flex: 1;
+    padding: 13px 20px;
+    background: var(--sr);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity .15s, transform .1s;
+    box-shadow: 0 2px 10px rgba(255,111,97,.25);
+  }
+  .btn-main:hover { opacity: .9; }
+  .btn-main:active { transform: scale(.98); }
+  .btn-ghost {
+    padding: 13px 20px;
+    background: var(--white);
+    border: 1px solid var(--gray-2);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .btn-ghost:hover { background: var(--gray); }
+
+  /* ─── Results ─── */
+  .results-hero {
+    text-align: center;
+    padding: 32px 0 28px;
+  }
+  .ring-wrap {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 16px;
+  }
+  .ring-wrap svg { overflow: visible; }
+  .global-score {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .score-big {
+    font-family: 'DM Serif Display', serif;
+    font-size: 38px;
+    color: var(--brown);
+    line-height: 1;
+  }
+  .score-denom {
+    font-size: 12px;
+    color: var(--text-3);
+    margin-top: 2px;
+  }
+  .score-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--brown);
+    margin-bottom: 6px;
+  }
+  .score-tagline {
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  .score-pill {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: var(--radius-pill);
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 12px;
+  }
+
+  /* ─── Domain result bars ─── */
+  .results-grid { margin-top: 8px; }
+  .dr-card {
+    background: var(--white);
+    border: 1px solid var(--gray-2);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 10px;
+  }
+  .dr-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .dr-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dr-name {
+    font-size: 13px;
+    font-weight: 500;
+    flex: 1;
+    color: var(--text);
+  }
+  .dr-pct {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .bar-track {
+    height: 5px;
+    background: var(--gray);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    width: 0;
+    transition: width 1s cubic-bezier(.4,0,.2,1);
+  }
+  .action-list {
+    list-style: none;
+    border-top: 1px solid var(--gray);
+    padding-top: 10px;
+  }
+  .action-li {
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--gray);
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+  .action-li:last-child { border-bottom: none; }
+  .action-li-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  /* ─── Actions view ─── */
+  .actions-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .done-bar-track {
+    flex: 1;
+    height: 3px;
+    background: var(--gray-2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .done-bar-fill {
+    height: 100%;
+    background: var(--sr);
+    border-radius: 2px;
+    transition: width .4s ease;
+  }
+  .done-bar-label {
+    font-size: 12px;
+    color: var(--text-3);
+    min-width: 60px;
+    text-align: right;
+  }
+
+  .filter-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .f-btn {
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--gray-2);
+    background: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .f-btn:hover { border-color: var(--sr-m); color: var(--brown); }
+  .f-btn.fa { background: var(--sr); border-color: var(--sr); color: #fff; }
+  .f-btn.fb { background: var(--sb); border-color: var(--sb); color: #fff; }
+
+  .dom-section { margin-bottom: 24px; }
+  .dom-section-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .dom-s-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dom-s-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .dom-s-sub { font-size: 12px; color: var(--text-3); }
+
+  .ac-card {
+    background: var(--white);
+    border: 1px solid var(--gray-2);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 6px;
+    transition: border-color .15s;
+  }
+  .ac-card:hover { border-color: var(--sr-m); }
+  .ac-card.hidden { display: none; }
+  .lvl-pill {
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .ac-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+    flex: 1;
+  }
+  .check-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gray-2);
+    background: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .15s;
+    margin-top: 1px;
+  }
+  .check-btn:hover { border-color: var(--sr); background: var(--sr-l); }
+  .check-btn.on { background: var(--sr); border-color: var(--sr); }
+  .check-btn svg { opacity: 0; transition: opacity .15s; }
+  .check-btn.on svg { opacity: 1; }
+
+  .cta-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 13px;
+    background: var(--sb-l);
+    border: 1px solid var(--sb-m);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--sb-d);
+    cursor: pointer;
+    transition: background .15s;
+    text-align: center;
+  }
+  .cta-btn:hover { background: #d5dcf7; }
+
+  /* ─── Footer / References ─── */
+  .footer-refs {
+    margin-top: 40px;
+    border-top: 1px solid var(--gray-2);
+    padding-top: 20px;
+  }
+  .refs-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-2);
+    padding: 6px 0;
+    user-select: none;
+    transition: color .15s;
+  }
+  .refs-toggle:hover { color: var(--sr); }
+  .refs-body {
+    padding: 16px 0 8px;
+  }
+  .refs-list {
+    list-style: none;
+    counter-reset: refs;
+    padding: 0;
+    margin: 0 0 14px;
+  }
+  .refs-list li {
+    counter-increment: refs;
+    display: flex;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--text-2);
+    line-height: 1.6;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--gray);
+  }
+  .refs-list li:last-child { border-bottom: none; }
+  .refs-list li::before {
+    content: counter(refs);
+    min-width: 18px;
+    height: 18px;
+    background: var(--gray);
+    color: var(--text-3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .refs-list strong { color: var(--text); font-weight: 500; }
+  .refs-list em { font-style: italic; }
+  .refs-note {
+    font-size: 11px;
+    color: var(--text-3);
+    font-style: italic;
+    padding: 10px 14px;
+    background: var(--gray);
+    border-radius: var(--radius-sm);
+    border-left: 2px solid var(--sr-m);
+  }
+  .footer-brand {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: .02em;
+    padding: 16px 0 4px;
+  }
+  .footer-brand span { color: var(--sr); }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 480px) {
+    .header { padding: 32px 0 24px; }
+    .domain-card { padding: 18px; }
+    .r-btn { height: 34px; font-size: 12px; }
+    .nav-tab { font-size: 12px; padding: 8px 4px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Header -->
+  <header class="header">
+    <h1>Évalue ta<br><em>confiance en toi</em></h1>
+    <p class="header-sub">20 questions sur 5 domaines — résultats personnalisés et actions concrètes</p>
+  </header>
+
+  <!-- Nav -->
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('eval')">Évaluation</button>
+    <button class="nav-tab" onclick="switchTab('results')">Résultats</button>
+    <button class="nav-tab" onclick="switchTab('actions')">Actions</button>
+  </nav>
+
+  <!-- ── SECTION: Évaluation ── -->
+  <div class="section active" id="sec-eval">
+
+    <div class="prog-row">
+      <div class="prog-track"><div class="prog-fill" id="eval-prog" style="width:0%"></div></div>
+      <span class="prog-text" id="eval-prog-lbl">0 / 20</span>
+    </div>
+
+    <div id="eval-cards"></div>
+
+    <div class="btn-row">
+      <button class="btn-ghost" id="btn-prev" onclick="prevD()" style="display:none">← Retour</button>
+      <button class="btn-main" id="btn-next" onclick="nextD()">Suivant →</button>
+    </div>
+
+  </div>
+
+  <!-- ── SECTION: Résultats ── -->
+  <div class="section" id="sec-results">
+
+    <div class="results-hero">
+      <div class="ring-wrap">
+        <svg width="130" height="130" viewBox="0 0 130 130">
+          <circle cx="65" cy="65" r="52" fill="none" stroke="#f2eeec" stroke-width="10"/>
+          <circle id="ring-main" cx="65" cy="65" r="52" fill="none" stroke="#ff6f61" stroke-width="10"
+            stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327"
+            transform="rotate(-90 65 65)" style="transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)"/>
+          <circle id="ring-blue" cx="65" cy="65" r="52" fill="none" stroke="#506ed9" stroke-width="10"
+            stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327"
+            transform="rotate(-90 65 65)" style="transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1) .15s;opacity:.3"/>
+        </svg>
+        <div class="global-score">
+          <span class="score-big" id="score-num">—</span>
+          <span class="score-denom">/ 100</span>
+        </div>
+      </div>
+      <p class="score-heading" id="score-heading">—</p>
+      <p class="score-tagline" id="score-tagline"></p>
+      <span class="score-pill" id="score-pill"></span>
+    </div>
+
+    <div class="results-grid" id="results-grid"></div>
+
+    <div class="btn-row" style="margin-top:20px">
+      <button class="btn-ghost" onclick="restart()">Recommencer</button>
+      <button class="btn-main" onclick="switchTab('actions')">Voir mes actions →</button>
+    </div>
+
+  </div>
+
+  <!-- ── SECTION: Actions ── -->
+  <div class="section" id="sec-actions">
+
+    <div class="actions-top">
+      <div class="done-bar-track"><div class="done-bar-fill" id="done-fill" style="width:0%"></div></div>
+      <span class="done-bar-label" id="done-lbl">0 / 25 faites</span>
+    </div>
+
+    <div class="filter-row">
+      <button class="f-btn fa" id="f-all"  onclick="setFilter('all',this)">Toutes</button>
+      <button class="f-btn"    id="f-low"  onclick="setFilter('low',this)">Débutant</button>
+      <button class="f-btn"    id="f-mid"  onclick="setFilter('mid',this)">Intermédiaire</button>
+      <button class="f-btn"    id="f-high" onclick="setFilter('high',this)">Avancé</button>
+    </div>
+
+    <div id="actions-grid"></div>
+
+    <button class="cta-btn" onclick="openPlan()">Créer un programme 30 jours avec ces actions ↗</button>
+
+  </div>
+
+  <footer class="footer-refs">
+    <div class="refs-toggle" onclick="toggleRefs()">
+      <span>Références scientifiques</span>
+      <svg id="refs-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" style="transition:transform .25s">
+        <path d="M3 5L7 9L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="refs-body" id="refs-body" style="display:none">
+      <ol class="refs-list">
+        <li><strong>Bandura, A. (1977).</strong> Self-efficacy: Toward a unifying theory of behavioral change. <em>Psychological Review, 84</em>(2), 191–215.</li>
+        <li><strong>Bandura, A. (1997).</strong> <em>Self-efficacy: The exercise of control.</em> W. H. Freeman.</li>
+        <li><strong>Rosenberg, M. (1965).</strong> <em>Society and the adolescent self-image.</em> Princeton University Press.</li>
+        <li><strong>Schwarzer, R., &amp; Jerusalem, M. (1995).</strong> Generalized Self-Efficacy scale. In J. Weinman, S. Wright, &amp; M. Johnston (Eds.), <em>Measures in health psychology</em> (pp. 35–37). NFER-NELSON.</li>
+        <li><strong>Vealey, R. S. (1986).</strong> Conceptualization of sport-confidence and competitive orientation. <em>Journal of Sport Psychology, 8</em>(3), 221–246.</li>
+        <li><strong>Judge, T. A., Erez, A., Bono, J. E., &amp; Thoresen, C. J. (2003).</strong> The Core Self-Evaluations Scale. <em>Personnel Psychology, 56</em>(2), 303–331.</li>
+        <li><strong>Moritz, S. E., et al. (2000).</strong> The relation of self-efficacy measures to sport performance: A meta-analytic review. <em>Research Quarterly for Exercise and Sport, 71</em>(3), 280–294.</li>
+        <li><strong>Stajkovic, A. D., &amp; Luthans, F. (1998).</strong> Self-efficacy and work-related performance: A meta-analysis. <em>Psychological Bulletin, 124</em>(2), 240–261.</li>
+        <li><strong>Neff, K. D. (2003).</strong> Self-compassion: An alternative conceptualization of a healthy attitude toward oneself. <em>Self and Identity, 2</em>(2), 85–101.</li>
+        <li><strong>Kross, E., et al. (2014).</strong> Self-talk as a regulatory mechanism: How you do it matters. <em>Journal of Personality and Social Psychology, 106</em>(2), 304–324.</li>
+        <li><strong>Haney, C. J., &amp; Durlak, J. A. (1998).</strong> Changing self-esteem in children and adolescents: A meta-analytic review. <em>Journal of Clinical Child Psychology, 27</em>(4), 423–433.</li>
+        <li><strong>Locke, E. A., &amp; Latham, G. P. (2002).</strong> Building a practically useful theory of goal setting and task motivation. <em>American Psychologist, 57</em>(9), 705–717.</li>
+        <li><strong>Huang, C. (2013).</strong> Gender differences in academic self-efficacy: A meta-analysis. <em>European Journal of Psychology of Education, 28</em>(1), 1–35.</li>
+      </ol>
+      <p class="refs-note">Cet outil est à visée pédagogique et ne remplace pas un bilan psychologique professionnel.</p>
+    </div>
+    <p class="footer-brand">Réalisé avec <span>Sororama</span> · 2025</p>
+  </footer>
+
+</div>
+
+<script>
+const DOMAINS = [
+  {
+    id:'social', name:'Confiance sociale', sub:'Relations & prise de parole',
+    color:'#ff6f61', bg:'#fff0ef', emoji:'🗣',
+    qs:[
+      "Je prends facilement la parole dans un groupe ou en public.",
+      "Je n'ai pas peur du regard des autres quand j'exprime mon opinion.",
+      "Je réussis à poser mes limites sans culpabilité.",
+      "Je me sens à l'aise pour initier des conversations avec des inconnus."
+    ],
+    acts:[
+      {lvl:'low',  t:"Rejoindre un atelier de prise de parole (Toastmasters) une fois par semaine."},
+      {lvl:'low',  t:"Pratiquer le contact visuel + sourire avec 3 inconnus chaque jour."},
+      {lvl:'low',  t:"Envoyer un message à quelqu'un que vous admirez professionnellement."},
+      {lvl:'mid',  t:"Accepter une invitation sociale par semaine même sans envie initiale."},
+      {lvl:'mid',  t:"Exprimer un désaccord bienveillant une fois par semaine, sans vous excuser."},
+      {lvl:'high', t:"Mentorez quelqu'un : enseigner booste durablement la confiance sociale."},
+      {lvl:'high', t:"Animer une réunion ou présentation devant 10+ personnes."},
+    ]
+  },
+  {
+    id:'pro', name:'Confiance professionnelle', sub:'Compétences & légitimité',
+    color:'#506ed9', bg:'#eef1fc', emoji:'💼',
+    qs:[
+      "Je valorise mes compétences sans les minimiser face à mes collègues.",
+      "Je saisis des opportunités même si je n'en remplis pas tous les critères.",
+      "Je gère les retours négatifs sans remettre en cause toute ma valeur.",
+      "Je me sens légitime dans mon rôle ou domaine d'expertise."
+    ],
+    acts:[
+      {lvl:'low',  t:"Tenir un carnet de victoires pro : noter une réussite par jour."},
+      {lvl:'low',  t:"Lister vos 5 compétences les plus concrètes pour contrer l'imposteur."},
+      {lvl:'low',  t:"Relire d'anciens feedbacks positifs reçus et les archiver."},
+      {lvl:'mid',  t:"Demander proactivement un retour constructif à votre manager ce mois."},
+      {lvl:'mid',  t:"Postuler à une opportunité même si vous n'en remplissez pas tous les critères."},
+      {lvl:'high', t:"Partager votre expertise publiquement : article, présentation ou conférence."},
+      {lvl:'high', t:"Négocier une augmentation, une promotion ou de nouvelles responsabilités."},
+    ]
+  },
+  {
+    id:'corps', name:'Confiance corporelle', sub:'Corps & image de soi',
+    color:'#c45a4e', bg:'#faeae9', emoji:'🌿',
+    qs:[
+      "Je me sens bien dans mon corps, indépendamment des standards extérieurs.",
+      "Ma posture et mon langage corporel reflètent l'assurance que je veux projeter.",
+      "Je prends soin de moi sans que cela vire à l'obsession ou la honte.",
+      "Je ne me compare pas négativement aux autres de façon régulière."
+    ],
+    acts:[
+      {lvl:'low',  t:"Pratiquer 2 min de posture de puissance chaque matin avant une situation stressante."},
+      {lvl:'low',  t:"Remplacer une comparaison négative par : qu'est-ce que j'apprécie en moi aujourd'hui ?"},
+      {lvl:'mid',  t:"Rituel corporel positif : marche, danse, yoga — 20 min 3x/semaine."},
+      {lvl:'mid',  t:"Réduire les déclencheurs de comparaison (muter certains comptes sociaux)."},
+      {lvl:'high', t:"S'inscrire à un défi physique public dans les 60 prochains jours."},
+    ]
+  },
+  {
+    id:'decisions', name:'Confiance décisionnelle', sub:'Choix & autonomie',
+    color:'#3a55b8', bg:'#e8ecfb', emoji:'🧭',
+    qs:[
+      "Je prends des décisions importantes sans chercher l'approbation de tous.",
+      "Je tolère bien l'incertitude et ne procrastine pas par peur de me tromper.",
+      "Je rebondis vite après une erreur sans me laisser paralyser.",
+      "Je fais confiance à mon jugement même quand il diffère de celui des autres."
+    ],
+    acts:[
+      {lvl:'low',  t:"Micro-décisions rapides : max 60 secondes pour les choix mineurs."},
+      {lvl:'low',  t:"Règle du 10/10/10 : est-ce que ça comptera dans 10 min, 10 mois, 10 ans ?"},
+      {lvl:'mid',  t:"Analyser vos 3 dernières erreurs avec une perspective d'apprentissage."},
+      {lvl:'mid',  t:"Prendre une décision importante cette semaine sans chercher le consensus."},
+      {lvl:'high', t:"Prendre un risque calculé délibéré que vous repoussez depuis longtemps."},
+    ]
+  },
+  {
+    id:'emotionnel', name:'Confiance émotionnelle', sub:'Résilience & bienveillance',
+    color:'#e05a4a', bg:'#fff2f1', emoji:'✦',
+    qs:[
+      "Je reconnais et exprime mes émotions sans me sentir trop ou faible.",
+      "Je me parle avec bienveillance dans les moments difficiles.",
+      "Je rebondis assez vite après un rejet, un échec ou une critique.",
+      "Je n'ai pas besoin de la validation d'autrui pour me sentir bien dans ma peau."
+    ],
+    acts:[
+      {lvl:'low',  t:"Journaling émotionnel : 5 min par jour pour nommer ce que vous ressentez."},
+      {lvl:'low',  t:"Remplacer l'auto-critique : que dirais-je à une amie dans cette situation ?"},
+      {lvl:'mid',  t:"Méditation 10 min/jour pendant 21 jours (Petit Bambou, Headspace)."},
+      {lvl:'mid',  t:"Nommer votre voix critique intérieure pour mieux la désamorcer."},
+      {lvl:'high', t:"Soutenir quelqu'un en difficulté : l'empathie externe renforce l'auto-compassion."},
+    ]
+  }
+];
+
+const LVL_META = {
+  low:  { label:'Débutant',      bg:'#fff0ef', color:'#c04030' },
+  mid:  { label:'Intermédiaire', bg:'#eef1fc', color:'#2a3a7a' },
+  high: { label:'Avancé',        bg:'#eafaf3', color:'#1a5c3a' },
+};
+
+let cur = 0;
+let ans = {};
+let checked = new Set();
+let activeFilter = 'all';
+
+/* ── Tab switching ── */
+function switchTab(id) {
+  document.querySelectorAll('.nav-tab').forEach((t,i) => {
+    t.classList.toggle('active', ['eval','results','actions'][i] === id);
+  });
+  document.querySelectorAll('.section').forEach((s,i) => {
+    s.classList.toggle('active', ['sec-eval','sec-results','sec-actions'][i] === 'sec-'+id);
+  });
+  if (id === 'results') renderResults();
+  if (id === 'actions') renderActions();
+}
+
+/* ── Evaluation ── */
+function domScore(d) {
+  let s = 0;
+  d.qs.forEach((_,i) => s += (ans[d.id+'_'+i] || 0));
+  return Math.round((s / (d.qs.length * 5)) * 100);
+}
+
+function allAnswered(d) {
+  return d.qs.every((_,i) => ans[d.id+'_'+i]);
+}
+
+function updateProgBar() {
+  const total = DOMAINS.length * 4;
+  const done = Object.keys(ans).length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById('eval-prog').style.width = pct + '%';
+  document.getElementById('eval-prog-lbl').textContent = done + ' / ' + total;
+}
+
+function buildEvalCard(d) {
+  const qsHtml = d.qs.map((q, qi) => {
+    const k = d.id + '_' + qi;
+    const v = ans[k] || 0;
+    const btns = [1,2,3,4,5].map(n => {
+      const cls = v === n ? ` s${n}` : '';
+      return `<button class="r-btn${cls}" onclick="rate('${k}',${n},this)">${n}</button>`;
+    }).join('');
+    return `<div class="q-block">
+      <p class="q-text"><span class="q-num">${qi+1}.</span>${q}</p>
+      <div class="rating-row">${btns}</div>
+      <div class="rating-ends"><span>pas du tout</span><span>tout à fait</span></div>
+    </div>`;
+  }).join('');
+
+  return `<div class="domain-card" id="dc-${d.id}">
+    <div class="domain-head">
+      <div class="domain-icon" style="background:${d.bg};font-size:17px">${d.emoji}</div>
+      <div>
+        <p class="domain-name">${d.name}</p>
+        <p class="domain-sub-label">${d.sub}</p>
+      </div>
+    </div>
+    ${qsHtml}
+  </div>`;
+}
+
+function renderEval() {
+  document.getElementById('eval-cards').innerHTML = buildEvalCard(DOMAINS[cur]);
+  updateProgBar();
+  document.getElementById('btn-prev').style.display = cur > 0 ? 'block' : 'none';
+  document.getElementById('btn-next').textContent = cur < DOMAINS.length - 1 ? 'Suivant →' : 'Voir mes résultats →';
+}
+
+function rate(k, v, el) {
+  ans[k] = v;
+  el.closest('.rating-row').querySelectorAll('.r-btn').forEach((b, i) => {
+    b.className = 'r-btn' + (i + 1 === v ? ` s${v}` : '');
+  });
+  updateProgBar();
+}
+
+function nextD() {
+  if (!allAnswered(DOMAINS[cur])) {
+    const card = document.getElementById('dc-' + DOMAINS[cur].id);
+    card.classList.add('shake');
+    setTimeout(() => card.classList.remove('shake'), 500);
+    return;
+  }
+  if (cur < DOMAINS.length - 1) {
+    cur++;
+    renderEval();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    switchTab('results');
+  }
+}
+
+function prevD() {
+  if (cur > 0) {
+    cur--;
+    renderEval();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function restart() {
+  ans = {};
+  cur = 0;
+  switchTab('eval');
+  renderEval();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Results ── */
+function renderResults() {
+  const scores = DOMAINS.map(d => domScore(d));
+  const glob = Math.round(scores.reduce((a,b) => a+b, 0) / scores.length);
+
+  document.getElementById('score-num').textContent = glob;
+
+  const circ = 327;
+  const off = Math.round(circ - (glob / 100) * circ);
+  setTimeout(() => {
+    document.getElementById('ring-main').style.strokeDashoffset = off;
+    document.getElementById('ring-blue').style.strokeDashoffset = Math.round(circ - (glob/100)*circ*0.55);
+  }, 80);
+
+  let heading, tagline, pillBg, pillColor, pillText;
+  if (glob >= 75) {
+    heading = 'Confiance solide'; tagline = 'Tu as des bases robustes — l\'heure est à l\'expansion.';
+    pillBg = '#eafaf3'; pillColor = '#1a5c3a'; pillText = 'Niveau avancé';
+  } else if (glob >= 50) {
+    heading = 'En développement'; tagline = 'De belles fondations — quelques leviers à activer.';
+    pillBg = '#eef1fc'; pillColor = '#2a3a7a'; pillText = 'Niveau intermédiaire';
+  } else {
+    heading = 'Terrain de croissance'; tagline = 'Chaque petit pas compte — commence par le premier.';
+    pillBg = '#fff0ef'; pillColor = '#c04030'; pillText = 'Niveau débutant';
+  }
+
+  document.getElementById('score-heading').textContent = heading;
+  document.getElementById('score-tagline').textContent = tagline;
+  const pill = document.getElementById('score-pill');
+  pill.textContent = pillText;
+  pill.style.background = pillBg;
+  pill.style.color = pillColor;
+
+  const grid = document.getElementById('results-grid');
+  grid.innerHTML = '';
+
+  DOMAINS.forEach((d, i) => {
+    const sc = scores[i];
+    const lvl = sc <= 40 ? 'low' : sc <= 70 ? 'mid' : 'high';
+    const topActs = d.acts.filter(a => a.lvl === lvl).slice(0, 3);
+
+    const div = document.createElement('div');
+    div.className = 'dr-card';
+    div.innerHTML = `
+      <div class="dr-top">
+        <div class="dr-dot" style="background:${d.color}"></div>
+        <span class="dr-name">${d.name}</span>
+        <span class="dr-pct" style="color:${d.color}">${sc} %</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" data-w="${sc}" style="background:${d.color}"></div>
+      </div>
+      <ul class="action-list">
+        ${topActs.map(a => `<li class="action-li">
+          <div class="action-li-dot" style="background:${d.color}"></div>
+          <span>${a.t}</span>
+        </li>`).join('')}
+      </ul>`;
+    grid.appendChild(div);
+  });
+
+  setTimeout(() => {
+    document.querySelectorAll('.bar-fill').forEach(b => {
+      b.style.width = b.dataset.w + '%';
+    });
+  }, 200);
+}
+
+/* ── Actions ── */
+function updateDoneBar() {
+  const total = 25;
+  const done = checked.size;
+  document.getElementById('done-fill').style.width = Math.round((done/total)*100) + '%';
+  document.getElementById('done-lbl').textContent = done + ' / ' + total + ' faites';
+}
+
+function renderActions() {
+  const grid = document.getElementById('actions-grid');
+  grid.innerHTML = '';
+
+  DOMAINS.forEach(d => {
+    const filtered = d.acts.filter(a => activeFilter === 'all' || a.lvl === activeFilter);
+    if (!filtered.length) return;
+
+    const sec = document.createElement('div');
+    sec.className = 'dom-section';
+    const cards = filtered.map(a => {
+      const uid = d.id + '_' + d.acts.indexOf(a);
+      const isDone = checked.has(uid);
+      const lm = LVL_META[a.lvl];
+      return `<div class="ac-card" id="ac-${uid}">
+        <span class="lvl-pill" style="background:${lm.bg};color:${lm.color}">${lm.label}</span>
+        <span class="ac-text">${a.t}</span>
+        <button class="check-btn${isDone?' on':''}" onclick="toggleCheck('${uid}')" title="Marquer comme fait">
+          <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+            <path d="M1 4L3.5 6.5L9 1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>`;
+    }).join('');
+
+    sec.innerHTML = `
+      <div class="dom-section-head">
+        <div class="dom-s-dot" style="background:${d.color}"></div>
+        <span class="dom-s-name">${d.name}</span>
+        <span class="dom-s-sub"> — ${d.sub}</span>
+      </div>
+      <div>${cards}</div>`;
+    grid.appendChild(sec);
+  });
+
+  updateDoneBar();
+}
+
+function toggleCheck(uid) {
+  const btn = document.querySelector(`#ac-${uid} .check-btn`);
+  if (!btn) return;
+  if (checked.has(uid)) { checked.delete(uid); btn.classList.remove('on'); }
+  else { checked.add(uid); btn.classList.add('on'); }
+  updateDoneBar();
+}
+
+function setFilter(lvl, el) {
+  activeFilter = lvl;
+  document.querySelectorAll('.f-btn').forEach(b => {
+    b.classList.remove('fa','fb');
+    b.style.background = '';
+    b.style.borderColor = '';
+    b.style.color = '';
+  });
+  if (lvl === 'high') el.classList.add('fb');
+  else el.classList.add('fa');
+  renderActions();
+}
+
+function openPlan() {
+  const scores = DOMAINS.map(d => domScore(d));
+  const glob = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+  alert(`Score global : ${glob}/100\n\nOuvrez Claude et collez ce message :\n\n"Crée-moi un programme 30 jours basé sur mes scores de confiance en soi :\n${DOMAINS.map((d,i)=>'- '+d.name+' : '+scores[i]+'/100').join('\n')}\n\nRépartis les 25 actions semaine par semaine selon les domaines et les niveaux."`);
+}
+
+/* ── References toggle ── */
+function toggleRefs() {
+  const body = document.getElementById('refs-body');
+  const arrow = document.getElementById('refs-arrow');
+  const open = body.style.display === 'none';
+  body.style.display = open ? 'block' : 'none';
+  arrow.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+
+/* ── Init ── */
+renderEval();
+</script>
+
+</body>
+</html>
